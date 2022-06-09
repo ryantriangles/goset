@@ -192,6 +192,31 @@ func ExampleSet_Clear() {
 	// Output: 0
 }
 
+func TestSetThreadsafety(t *testing.T) {
+	// For running with -race
+	s := NewSet(1, 2, 3)
+	go func() {
+		for i := 0; i < 200000; i++ {
+			s.Add(i)
+		}
+	}()
+	go func() {
+		for i := 0; i < 200000; i++ {
+			s.Discard(i)
+		}
+	}()
+	go func() {
+		for i := 0; i < 200000; i++ {
+			s.Add(i)
+		}
+	}()
+	go func() {
+		for i := 0; i < 200000; i++ {
+			s.Discard(i)
+		}
+	}()
+}
+
 func contains[T comparable](target T, searchSpace []T) bool {
 	for _, val := range searchSpace {
 		if val == target {
