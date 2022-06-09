@@ -53,6 +53,10 @@ nums1.SupersetOf(nums3)
 
 nums1.Extend(nums3)
 // nums1 = {4, 700, 40}
+
+nums1.Clear()
+nums1.Size()
+// 0
 ```
 
 # Operations
@@ -60,6 +64,7 @@ nums1.Extend(nums3)
 ## Mutating
 
 - `Add(values... T)`, add each element in `values` to the set
+- `Clear()`, remove all values from the set
 - `Discard(value T)`, remove `value` from the set
 - `Extend(other Set[T])`, add all elements in `other` to the set
 - `Subtract(other Set[T])`, remove all elements in `other` from the set

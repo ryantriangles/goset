@@ -194,6 +194,13 @@ func ExampleSet_EqualTo() {
 	// Output: true
 }
 
+func ExampleSet_Clear() {
+	s := NewSet(1, 2, 3)
+	s.Clear()
+	fmt.Println(s.Size())
+	// Output: 0
+}
+
 func contains[T comparable](target T, searchSpace []T) bool {
 	for _, val := range searchSpace {
 		if val == target {

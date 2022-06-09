@@ -129,3 +129,10 @@ func (s Set[T]) Extend(other Set[T]) {
 		s.Add(value)
 	}
 }
+
+// Clear removes every element from the set.
+func (s Set[T]) Clear() {
+	for value := range s {
+		s.Discard(value)
+	}
+}
