@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+func ExampleSet() {
+	s := NewSet(1, 2, 3, 14)
+	fmt.Println(s.Size())
+	// Output: 4
+}
+
 func ExampleSet_Add() {
 	s := NewSet[int]()
 	s.Add(4, 8, 15, 16)

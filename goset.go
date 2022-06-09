@@ -4,8 +4,10 @@ package goset
 // Disjoint, implemented as a map with empty-struct values.
 type Set[T comparable] map[T]struct{}
 
-func NewSet[T comparable]() Set[T] {
-	return make(Set[T])
+func NewSet[T comparable](initialValues... T) Set[T] {
+	set := make(Set[T])
+	set.Add(initialValues...)
+	return set
 }
 
 // nothing is the empty struct, a value consuming no memory, which is used
