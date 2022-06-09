@@ -11,6 +11,7 @@ type Set[T comparable] struct {
 	lock *sync.Mutex
 }
 
+// NewSet creates and returns a new set of the type T.
 func NewSet[T comparable](initialValues... T) Set[T] {
 	set := Set[T]{}
 	set.underlyingMap = make(map[T]struct{})
