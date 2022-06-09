@@ -125,3 +125,10 @@ func (s Set[T]) SubsetOf(other Set[T]) bool {
 func (s Set[T]) SupersetOf(other Set[T]) bool {
 	return other.SubsetOf(s)
 }
+
+// Extend adds each element in other to the set.
+func (s Set[T]) Extend(other Set[T]) {
+	for value := range other {
+		s.Add(value)
+	}
+}

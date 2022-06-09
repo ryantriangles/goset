@@ -20,6 +20,16 @@ func ExampleSet_SubsetOf() {
 	// false
 }
 
+func ExampleSet_Extend() {
+	a := NewSet(1, 2, 3)
+	b := NewSet(4, 18)
+	a.Extend(b)
+	fmt.Println(a.Has(4))
+	fmt.Println(a.Has(18))
+	// Output: true
+	// true
+}
+
 func ExampleSet_SupersetOf() {
 	a := NewSet(1, 2, 3)
 	b := NewSet(1, 2, 3, 4, 5)

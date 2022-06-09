@@ -50,6 +50,9 @@ nums1.SubsetOf(nums3)
 
 nums1.SupersetOf(nums3)
 // false
+
+nums1.Extend(nums3)
+// nums1 = {4, 700, 40}
 ```
 
 # Operations
@@ -58,6 +61,7 @@ nums1.SupersetOf(nums3)
 
 - `Add(values... T)`, add each element in `values` to the set
 - `Discard(value T)`, remove `value` from the set
+- `Extend(other Set[T])`, add all elements in `other` to the set
 - `Subtract(other Set[T])`, remove all elements in `other` from the set
 
 ## Non-mutating
