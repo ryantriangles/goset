@@ -112,3 +112,12 @@ func (s Set[T]) EqualTo(other Set[T]) bool {
 	}
 	return true
 }
+
+func (s Set[T]) SubsetOf(other Set[T]) bool {
+	for value := range s {
+		if !other.Has(value) {
+			return false
+		}
+	}
+	return true
+}
