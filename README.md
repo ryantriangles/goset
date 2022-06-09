@@ -1,6 +1,6 @@
 # goset
 
-A generic set implementation for Go >= 1.18.
+A generic thread-safe set implementation for Go >= 1.18.
 
 ```go
 // Create set, passing initial values of any comparable type
