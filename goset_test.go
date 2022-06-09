@@ -11,6 +11,15 @@ func ExampleSet() {
 	// Output: 4
 }
 
+func ExampleSet_SubsetOf() {
+	a := NewSet(1, 2, 3)
+	b := NewSet(1, 2, 3, 4, 5)
+	fmt.Println(a.SubsetOf(b))
+	fmt.Println(b.SubsetOf(a))
+	// Output: true
+	// false
+}
+
 func ExampleSet_Add() {
 	s := NewSet[int]()
 	s.Add(4, 8, 15, 16)
