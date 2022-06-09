@@ -47,6 +47,10 @@ nums1.EqualTo(nums2)
 nums3 := NewSet(4, 700, 40)
 nums1.SubsetOf(nums3)
 // true
+
+nums3 := NewSet(4, 700, 40)
+nums1.SupersetOf(nums3)
+// false
 ```
 
 # Operations
