@@ -3,7 +3,43 @@
 A generic set implementation for Go >= 1.18.
 
 ```go
+s := NewSet[int]()
 
+s.Add(4, 8, 15, 16)
+// s = {4, 8, 15, 16}
+
+s.Size()
+// 4
+
+s.Discard(8)
+// s = {4, 15, 16}
+
+x := NewSet[int]()
+x.Add(30)
+x.Disjoint(s)
+// returns new set {4, 15, 16, 30}
+
+x.Has(30)
+// true
+
+x.Discard(30)
+// x = {4, 15, 16}
+
+x.Add(700)
+x.Union(y)
+// returns new set {4, 15, 16, 700}
+
+
+z := NewSet[int]()
+z.Add(15, 16, 402)
+z.Intersection(x)
+// returns new set {15, 16}
+
+x.Subtract(z)
+// x = {4, 700}
+
+x.Values()
+// slice [4 700]
 ```
 
 # License
