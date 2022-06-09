@@ -152,8 +152,8 @@ func (s Set[T]) EqualTo(other Set[T]) bool {
 // SubsetOf reports whether the set is a subset of `other`.
 func (s Set[T]) SubsetOf(other Set[T]) bool {
 	s.lock.Lock()
-	other.lock.Lock()
 	defer s.lock.Unlock()
+	other.lock.Lock()
 	defer other.lock.Unlock()
 	for value := range s.underlyingMap {
 		_, ok := other.underlyingMap[value]
