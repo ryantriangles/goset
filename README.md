@@ -56,7 +56,7 @@ nums1.SupersetOf(nums3)
 
 ## Mutating
 
-- `Add(values... T)`, add each element in `values` from the set
+- `Add(values... T)`, add each element in `values` to the set
 - `Discard(value T)`, remove `value` from the set
 - `Subtract(other Set[T])`, remove all elements in `other` from the set
 
