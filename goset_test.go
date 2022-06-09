@@ -23,7 +23,7 @@ func ExampleSet_Size() {
 	fmt.Println(s.Size())
 	s.Discard(40)
 	fmt.Println(s.Size())
-	x := make(Set[int])
+	x := NewSet[int]()
 	fmt.Println(x.Size())
 	x.Add(30)
 	fmt.Println(x.Size())
@@ -148,6 +148,15 @@ func ExampleSet_Values() {
 	fmt.Println(contains(-5, values))
 	// Output: true
 	// false
+}
+
+func ExampleSet_EqualTo() {
+	x := NewSet[int]()
+	y := NewSet[int]()
+	x.Add(40)
+	y.Add(40)
+	fmt.Println(x.EqualTo(y))
+	// Output: true
 }
 
 func contains[T comparable](target T, searchSpace []T) bool {

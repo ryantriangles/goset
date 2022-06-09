@@ -96,3 +96,17 @@ func (s Set[T]) Values() []T {
 	}
 	return result
 }
+
+func (s Set[T]) EqualTo(other Set[T]) bool {
+	for val := range s {
+		if !other.Has(val) {
+			return false
+		}
+	}
+	for val := range other {
+		if !s.Has(val) {
+			return false
+		}
+	}
+	return true
+}

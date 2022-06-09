@@ -40,6 +40,12 @@ x.Subtract(z)
 
 x.Values()
 // slice [4 700]
+
+x2 := NewSet[int]()
+x2.Add(4)
+x2.Add(700)
+x2.EqualTo(x)
+// true
 ```
 
 # License
