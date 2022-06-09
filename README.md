@@ -3,17 +3,16 @@
 A generic set implementation for Go >= 1.18.
 
 ```go
-s := NewSet[int]()
-
-s.Add(4, 8, 15, 16)
-// s = {4, 8, 15, 16}
-
+// Create set, passing initial values of any comparable type
+s := NewSet(4, 8)
+s.Add(15, 16)
 s.Size()
 // 4
 
 s.Discard(8)
 // s = {4, 15, 16}
 
+// When creating an empty set, pass a type
 x := NewSet[int]()
 x.Add(30)
 x.Disjoint(s)
