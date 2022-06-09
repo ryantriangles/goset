@@ -102,17 +102,10 @@ func (s Set[T]) Values() []T {
 // EqualTo reports whether the set is equal to `other`. Two sets are equal if
 // they contain the same values.
 func (s Set[T]) EqualTo(other Set[T]) bool {
-	for val := range s {
-		if !other.Has(val) {
-			return false
-		}
+	if s.Size() != other.Size() {
+		return false
 	}
-	for val := range other {
-		if !s.Has(val) {
-			return false
-		}
-	}
-	return true
+	return s.SubsetOf(other)
 }
 
 // SubsetOf reports whether the set is a subset of `other`.
