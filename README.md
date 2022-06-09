@@ -28,7 +28,6 @@ x.Add(700)
 x.Union(y)
 // returns new set {4, 15, 16, 700}
 
-
 z := NewSet[int]()
 z.Add(15, 16, 402)
 z.Intersection(x)
