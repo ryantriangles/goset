@@ -75,7 +75,7 @@ nums1.Extend(nums3)
 - `Union(other Set[T]) Set[T]`, get a new set combining the elements of the receiver and `other`
 - `Values() []T`, get a slice of the set's values
 
-# License
+# License (MIT)
 
 © 2021 Ryan Plant
 
