@@ -121,3 +121,7 @@ func (s Set[T]) SubsetOf(other Set[T]) bool {
 	}
 	return true
 }
+
+func (s Set[T]) SupersetOf(other Set[T]) bool {
+	return other.SubsetOf(s)
+}

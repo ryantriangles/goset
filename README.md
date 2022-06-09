@@ -64,6 +64,7 @@ nums1.SubsetOf(nums3)
 - `Has(value T) bool`, check if the set contains `value`
 - `Intersection(other Set[T]) Set[T]`, get a new set containing elements present in both the receiver and `other`
 - `SubsetOf(other Set[T]) bool`, check if the receiver is a subset of `other`
+- `SupersetOf(other Set[T]) bool`, check if the receiver is a superset of `other`
 - `Union(other Set[T]) Set[T]`, get a new set combining the elements of the receiver and `other`
 - `Values() []T`, get a slice of the set's values
 
