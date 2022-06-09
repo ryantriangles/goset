@@ -31,8 +31,10 @@ func (s Set[T]) Has(v T) bool {
 }
 
 // Discard removes v from the set.
-func (s Set[T]) Discard(v T) {
-	delete(s, v)
+func (s Set[T]) Discard(v... T) {
+	for _, e := range v {
+		delete(s, e)
+	}
 }
 
 // Union returns a new set containing all elements in the set and all elements
