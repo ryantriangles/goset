@@ -58,19 +58,10 @@ func ExampleSet_Size() {
 	fmt.Println(s.Size())
 	s.Discard(40)
 	fmt.Println(s.Size())
-	x := NewSet[int]()
-	fmt.Println(x.Size())
-	x.Add(30)
-	fmt.Println(x.Size())
-	y := x.Disjoint(s)
-	fmt.Println(y.Size())
 	// Output: 1
 	// 2
 	// 2
 	// 1
-	// 0
-	// 1
-	// 2
 }
 
 func ExampleSet_Has() {

@@ -1,15 +1,23 @@
 package goset
 
+import (
+	"sync"
+)
+
 // Set is a set type providing operations like Add, Discard, Union, and
 // Disjoint, implemented as a map with empty-struct values.
 type Set[T comparable] struct {
 	underlyingMap map[T]struct{}
+	lock *sync.Mutex
 }
 
 func NewSet[T comparable](initialValues... T) Set[T] {
 	set := Set[T]{}
 	set.underlyingMap = make(map[T]struct{})
-	set.Add(initialValues...)
+	set.lock = &sync.Mutex{}
+	for _, e := range initialValues {
+		set.underlyingMap[e] = nothing
+	}
 	return set
 }
 
@@ -19,11 +27,15 @@ var nothing struct{}
 
 // Size returns the number of elements in the set.
 func (s Set[T]) Size() int {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	return len(s.underlyingMap)
 }
 
 // Add adds each of its arguments to the set.
 func (s Set[T]) Add(v... T) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	for _, e := range v {
 		s.underlyingMap[e] = nothing
 	}
@@ -31,12 +43,16 @@ func (s Set[T]) Add(v... T) {
 
 // Has returns true if v is in the set, false if it is not.
 func (s Set[T]) Has(v T) bool {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	_, ok := s.underlyingMap[v]
 	return ok
 }
 
 // Discard removes v from the set.
 func (s Set[T]) Discard(v... T) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	for _, e := range v {
 		delete(s.underlyingMap, e)
 	}
@@ -45,12 +61,16 @@ func (s Set[T]) Discard(v... T) {
 // Union returns a new set containing all elements in the set and all elements
 // in other.
 func (s Set[T]) Union(other Set[T]) Set[T] {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	other.lock.Lock()
+	defer other.lock.Unlock()
 	new := NewSet[T]()
 	for key := range other.underlyingMap {
-		new.Add(key)
+		new.underlyingMap[key] = nothing
 	}
 	for key := range s.underlyingMap {
-		new.Add(key)
+		new.underlyingMap[key] = nothing
 	}
 	return new
 }
@@ -58,10 +78,15 @@ func (s Set[T]) Union(other Set[T]) Set[T] {
 // Intersection returns a new set containing the elements present in both the
 // set and other.
 func (s Set[T]) Intersection(other Set[T]) Set[T] {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	other.lock.Lock()
+	defer other.lock.Unlock()
 	new := NewSet[T]()
 	for key := range s.underlyingMap {
-		if other.Has(key) {
-			new.Add(key)
+		_, ok := other.underlyingMap[key]
+		if ok {
+			new.underlyingMap[key] = nothing
 		}
 	}
 	return new
@@ -70,15 +95,21 @@ func (s Set[T]) Intersection(other Set[T]) Set[T] {
 // Disjoints returns a new set containing elements exclusive to the set
 // and elements exclusive to other, but not elements present in both.
 func (s Set[T]) Disjoint(other Set[T]) Set[T] {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	other.lock.Lock()
+	defer other.lock.Unlock()
 	new := NewSet[T]()
 	for key := range s.underlyingMap {
-		if !other.Has(key) {
-			new.Add(key)
+		_, ok := other.underlyingMap[key]
+		if !ok {
+			new.underlyingMap[key] = nothing
 		}
 	}
 	for key := range other.underlyingMap {
-		if !s.Has(key) {
-			new.Add(key)
+		_, ok := s.underlyingMap[key]
+		if !ok {
+			new.underlyingMap[key] = nothing
 		}
 	}
 	return new
@@ -86,13 +117,19 @@ func (s Set[T]) Disjoint(other Set[T]) Set[T] {
 
 // Subtract modifies the set, removing all elements present in other.
 func (s Set[T]) Subtract(other Set[T]) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	other.lock.Lock()
+	defer other.lock.Unlock()
 	for key := range other.underlyingMap {
-		s.Discard(key)
+		delete(s.underlyingMap, key)
 	}
 }
 
 // Values returns a slice of all values in the set in no particular order.
 func (s Set[T]) Values() []T {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	result := make([]T, len(s.underlyingMap))
 	index := 0
 	for value := range s.underlyingMap {
@@ -113,8 +150,13 @@ func (s Set[T]) EqualTo(other Set[T]) bool {
 
 // SubsetOf reports whether the set is a subset of `other`.
 func (s Set[T]) SubsetOf(other Set[T]) bool {
+	s.lock.Lock()
+	other.lock.Lock()
+	defer s.lock.Unlock()
+	defer other.lock.Unlock()
 	for value := range s.underlyingMap {
-		if !other.Has(value) {
+		_, ok := other.underlyingMap[value]
+		if !ok {
 			return false
 		}
 	}
@@ -128,14 +170,20 @@ func (s Set[T]) SupersetOf(other Set[T]) bool {
 
 // Extend adds each element in other to the set.
 func (s Set[T]) Extend(other Set[T]) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	other.lock.Lock()
+	defer other.lock.Unlock()
 	for value := range other.underlyingMap {
-		s.Add(value)
+		s.underlyingMap[value] = nothing
 	}
 }
 
 // Clear removes every element from the set.
 func (s Set[T]) Clear() {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	for value := range s.underlyingMap {
-		s.Discard(value)
+		delete(s.underlyingMap, value)
 	}
 }
