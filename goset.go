@@ -40,7 +40,7 @@ func (s Set[T]) Discard(v... T) {
 // Union returns a new set containing all elements in the set and all elements
 // in other.
 func (s Set[T]) Union(other Set[T]) Set[T] {
-	new := Set[T]{}
+	new := NewSet[T]()
 	for key := range other {
 		new.Add(key)
 	}
@@ -53,7 +53,7 @@ func (s Set[T]) Union(other Set[T]) Set[T] {
 // Intersection returns a new set containing the elements present in both the
 // set and other.
 func (s Set[T]) Intersection(other Set[T]) Set[T] {
-	new := Set[T]{}
+	new := NewSet[T]()
 	for key := range s {
 		if other.Has(key) {
 			new.Add(key)
