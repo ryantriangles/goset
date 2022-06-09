@@ -39,10 +39,9 @@ x.Subtract(z)
 x.Values()
 // slice [4 700]
 
-x2 := NewSet[int]()
-x2.Add(4)
-x2.Add(700)
-x2.EqualTo(x)
+nums1 := NewSet(4, 700)
+nums2 := NewSet(4, 700)
+nums1.EqualTo(nums2)
 // true
 ```
 
